@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#0b0f14" />
+  <title>Canada Road Signs</title>
+
+  <link rel="manifest" href="./manifest.json" />
+  <link rel="icon" href="./icon-192.png" />
+  <link rel="apple-touch-icon" href="./icon-192.png" />
+
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo">🚦</div>
+        <div class="title">
+          <div class="name">Canada Road Signs</div>
+          <div class="sub" id="offlineHint">Offline-ready PWA</div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <select id="lang" class="select" aria-label="Language">
+          <option value="en">EN</option>
+          <option value="fr">FR</option>
+          <option value="sw">SW</option>
+          <option value="ar">AR</option>
+          <option value="zh">中文</option>
+          <option value="pt">PT</option>
+          <option value="es">ES</option>
+        </select>
+
+        <button class="ghost" id="btnBrowse" aria-pressed="true">Browse</button>
+        <button class="ghost" id="btnQuiz" aria-pressed="false">Quiz</button>
+        <button class="ghost" id="btnProgress" aria-pressed="false">Progress</button>
+      </div>
+    </header>
+
+    <main class="main">
+      <!-- BROWSE -->
+      <section id="viewBrowse" class="view">
+        <div class="panel">
+          <div class="row">
+            <input id="search" class="input" placeholder="Search (e.g., stop, yield, school, lane)" />
+            <select id="category" class="select" aria-label="Category">
+              <option value="all">All categories</option>
+            </select>
+          </div>
+
+          <div class="row wrap small">
+            <label class="chip"><input type="checkbox" id="onlyStarred" /> Starred</label>
+            <label class="chip"><input type="checkbox" id="onlyLearned" /> Learned</label>
+            <button class="ghost smallbtn" id="btnResetFilters">Reset filters</button>
+          </div>
+        </div>
+
+        <div id="empty" class="empty hidden">No signs match your search.</div>
+
+        <div id="grid" class="grid"></div>
+
+        <template id="cardTpl">
+          <article class="card">
+            <div class="badge" data-badge>Tap to learn</div>
+
+            <div class="art" data-art></div>
+
+            <div class="cardBody">
+              <div class="cardTop">
+                <h3 class="cardTitle" data-name>Sign</h3>
+                <button class="star" type="button" data-star aria-label="Star">☆</button>
+              </div>
+
+              <div class="meaning" data-meaning>Meaning</div>
+
+              <div class="meta">
+                <span class="pill" data-cat>Category</span>
+                <span class="pill code" data-code>CODE</span>
+              </div>
+
+              <div class="row small">
+                <button class="btn" type="button" data-learn>Mark Learned</button>
+              </div>
+            </div>
+          </article>
+        </template>
+      </section>
+
+      <!-- QUIZ -->
+      <section id="viewQuiz" class="view hidden">
+        <div class="panel">
+          <div class="row">
+            <select id="quizMode" class="select">
+              <option value="meaning">Pick the meaning</option>
+              <option value="name">Pick the sign name</option>
+              <option value="category">Pick the category</option>
+            </select>
+
+            <select id="quizCategory" class="select">
+              <option value="all">All categories</option>
+            </select>
+
+            <button id="btnStartQuiz" class="btn">Start</button>
+          </div>
+
+          <div class="row small">
+            <div class="stat">Score: <span id="score">0</span></div>
+            <div class="stat">Streak: <span id="streak">0</span></div>
+            <div class="stat">Question: <span id="qnum">0</span></div>
+          </div>
+        </div>
+
+        <div class="panel quizCard">
+          <div id="quizSign" class="quizSign"></div>
+          <div class="quizText">
+            <div id="quizTitle" class="quizTitle">Press Start</div>
+            <div id="quizSub" class="muted">Choose the correct answer</div>
+          </div>
+
+          <div id="choices" class="choices"></div>
+
+          <div class="row wrap">
+            <button id="btnSkip" class="ghost">Skip</button>
+            <button id="btnReveal" class="ghost">Reveal</button>
+            <button id="btnNext" class="btn" disabled>Next</button>
+          </div>
+
+          <div id="feedback" class="feedback"></div>
+        </div>
+      </section>
+
+      <!-- PROGRESS -->
+      <section id="viewProgress" class="view hidden">
+        <div class="panel">
+          <div class="row">
+            <div class="statBig">
+              <div class="num" id="pLearned">0</div>
+              <div class="lbl">Learned</div>
+            </div>
+            <div class="statBig">
+              <div class="num" id="pStarred">0</div>
+              <div class="lbl">Starred</div>
+            </div>
+            <div class="statBig">
+              <div class="num" id="pTotal">0</div>
+              <div class="lbl">Total</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <button id="btnClearProgress" class="danger">Clear progress</button>
+          <div class="muted tip">
+            Tip: In Browse mode, tap a card to mark it “Learned”, and use ⭐ to star it.
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="muted small">Offline PWA • Works without internet once installed</div>
+    </footer>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>
